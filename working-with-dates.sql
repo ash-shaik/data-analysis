@@ -4,7 +4,7 @@
    Useful when we want to analyze metrics on all days.
    Using ncharlton.q1_subscriptions from Mode Analytics, public dataset.
    */
-  -- CREATE TABLE date_dim AS
+  -- CREATE TABLE dates AS
   WITH dates AS (
     SELECT
       date,
