@@ -32,6 +32,7 @@ from tali_walt.wp_posts
 order by post_type;
 
 -- To get the first and last value with in the partition.
+-- ORDER BY is important in these functions.
 SELECT post_type
      , ROW_NUMBER() over W
      , post_title
