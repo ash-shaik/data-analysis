@@ -13,7 +13,7 @@ SELECT id,
        song_name
 FROM tutorial.billboard_top_100_year_end
 WHERE id >= (
-    SELECT FLOOR(random() * (max(id) - min(id) + 1) + min(id))
+    SELECT FLOOR(RANDOM() * (max(id) - min(id) + 1) + min(id))
     FROM tutorial.billboard_top_100_year_end
 )
 ORDER BY id
@@ -23,6 +23,6 @@ LIMIT 1;
 SELECT id, song_name
 FROM tutorial.billboard_top_100_year_end tb1
          JOIN
-     (SELECT FLOOR(min(id) + (max(id) - min(id) + 1) * RANDOM()) AS id2
+     (SELECT FLOOR(RANDOM()* (max(id) - min(id) + 1) + min(id)) AS id2
       FROM tutorial.billboard_top_100_year_end) tb2 ON tb1.id = tb2.id2
 ;
