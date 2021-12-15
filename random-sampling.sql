@@ -28,3 +28,13 @@ FROM tutorial.billboard_top_100_year_end tb1
      (SELECT FLOOR(RANDOM()* (max(id) - min(id) + 1) + min(id)) AS id2
       FROM tutorial.billboard_top_100_year_end) tb2 ON tb1.id = tb2.id2
 ;
+
+-- This is a variation of the above the approach, but tackles when a match is not found
+-- on the id.
+SELECT id, song_name
+FROM tutorial.billboard_top_100_year_end tb1
+         JOIN
+     (SELECT FLOOR(RANDOM()* (max(id) - min(id) + 1) + min(id)) AS id2
+      FROM tutorial.billboard_top_100_year_end) tb2 ON tb1.id >= tb2.id2
+ORDER BY tb1.id LIMIT 1
+;
