@@ -20,6 +20,8 @@ ORDER BY id
 LIMIT 1;
 
 -- A better approach could be to use a subquery and JOIN to avoid the table scan.
+-- Here we select a random id in the range min(id) to max(id) and JOIN on that
+-- to fetch your record.
 SELECT id, song_name
 FROM tutorial.billboard_top_100_year_end tb1
          JOIN
