@@ -1,6 +1,9 @@
 /*
   Given purchases by customers, when we are looking for users with repeat purchases.
   Using the sid91.store_purchases from Mode Analytics, public dataset.
+
+  I should also note that common table expressions (CTEs) and window functions are
+  simple, robust and more expressive ways to built your queries.
  */
 
  WITH num_purchases AS (
