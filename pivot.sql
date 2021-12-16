@@ -56,3 +56,19 @@ SELECT company,
        UNNEST(product_list) AS product,
        UNNEST(member_list)  AS members
 FROM agg_query;
+
+/* An interesting problem on Pivots, available on Hacker Rank
+   https://www.hackerrank.com/challenges/occupations/problem
+ */
+
+SELECT MIN(Doctor), MIN(Professor), MIN(Singer), MIN(Actor)
+FROM (
+         SELECT row_number() over (PARTITION by occupation ORDER BY name)  as rn
+              , CASE WHEN occupation = 'Doctor' THEN name ELSE NULL END    AS Doctor
+              , CASE WHEN occupation = 'Professor' THEN name ELSE NULL END AS Professor
+              , CASE WHEN occupation = 'Singer' THEN name ELSE NULL END    AS Singer
+              , CASE WHEN occupation = 'Actor' THEN name ELSE NULL END     AS Actor
+
+         FROM OCCUPATIONS) AS OCP
+GROUP BY rn
+ORDER BY rn
