@@ -90,3 +90,7 @@ FROM (
 WHERE starttime < current_timestamp - '10 years'::interval
 ORDER BY bookid
 ;
+
+-- Average booking age
+SELECT avg(age(starttime)) avg_booking_age
+FROM vtrbusic.bookings;
