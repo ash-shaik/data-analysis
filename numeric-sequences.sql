@@ -1,6 +1,6 @@
 /*
   Here is a pattern for Generating sequence of numbers , for a smaller upper bound.
-  We'll do this by using a fun question from hacker rank.
+  We'll do this by using some fun questions from hacker rank.
  */
 
 -- in MySQL cte_max_recursion_depth controls the upper
