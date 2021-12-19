@@ -11,7 +11,8 @@ SELECT REPEAT('* ', value)
 FROM seq;
 
 -- https://www.hackerrank.com/challenges/print-prime-numbers
--- Use of sub queries. Sub Query when it returns any rows NOT EXISTS evaluates to FALSE.
+-- Use of sub queries. Sub Query when it does not evaluate/returns
+-- any rows NOT EXISTS evaluates to TRUE.
 -- When no factor exists, other than itself its a prime.
 WITH RECURSIVE seq AS
                        (SELECT 2 AS value UNION ALL SELECT value + 1 FROM seq WHERE value < 1000)
