@@ -34,7 +34,6 @@ SELECT customer_tx.*
 
      , (SELECT SUM(p2.amount)
         FROM vtrbusic.payment p2
-        WHERE p2.customer_id = customer_tx.customer_id)                                              AS LTV
-
+        WHERE p2.customer_id = customer_tx.customer_id)  AS LTV                                             AS LTV
 
 FROM customer_tx
