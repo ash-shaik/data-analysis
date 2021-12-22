@@ -5,7 +5,9 @@
 
 -- Using Self join
 
-SELECT po.customer_id, payment_date, SUM(amount) AS first_order_amount
+SELECT po.customer_id
+     , payment_date AS first_order_date
+     , SUM(amount)  AS first_order_amount
 FROM vtrbusic.payment p
          JOIN
      (SELECT customer_id, min(payment_date) as first_order
@@ -15,3 +17,12 @@ GROUP BY po.customer_id, payment_date
 ;
 
 
+-- Using window functions
+SELECT customer_id, payment_date as first_order_date, first_order_amount
+FROM (
+         SELECT customer_id
+              , payment_date
+              , amount AS first_order_amount
+              , ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY payment_date) AS rn
+         FROM vtrbusic.payment p) po
+WHERE rn = 1
