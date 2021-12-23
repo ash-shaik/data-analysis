@@ -22,7 +22,17 @@ SELECT customer_id, payment_date as first_order_date, first_order_amount
 FROM (
          SELECT customer_id
               , payment_date
-              , amount AS first_order_amount
+              , amount                                                             AS first_order_amount
               , ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY payment_date) AS rn
          FROM vtrbusic.payment p) po
 WHERE rn = 1
+
+-- using CTE
+WITH fot AS (SELECT customer_id
+                  , payment_date
+                  , amount AS first_order_amount
+                  , ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY payment_date) AS rn
+             FROM vtrbusic.payment)
+
+SELECT customer_id, payment_date as first_order_date FROM fot
+WHERE rn = 1;
