@@ -71,3 +71,33 @@ FROM second_order
 ORDER BY customer_id, second_order.payment_date
 ;
 
+/**
+  New vs Repeat Customers trend.
+  - We can see from the data below , there have been no new
+    customer acquisition after 2007, April
+ */
+
+ WITH order_hist AS (
+SELECT p.*
+, LAG(p.payment_date) OVER(PARTITION BY p.customer_id ORDER BY payment_date) as previous_order_date
+, ROW_NUMBER() OVER(PARTITION BY p.customer_id ORDER BY payment_date) as order_rank
+, ROW_NUMBER() OVER(PARTITION BY p.customer_id ORDER BY amount DESC) as max_amount_rank
+, ROW_NUMBER() OVER(PARTITION BY p.customer_id ORDER BY amount ASC) as min_amount_rank
+FROM vtrbusic.payment p
+)
+SELECT order_year, order_month, order_quarter, orank, SUM(num_orders) FROM (
+SELECT
+   EXTRACT(year from payment_date) order_year
+ , EXTRACT(month from payment_date) order_month
+ , EXTRACT(quarter from payment_date) order_quarter
+ , CASE WHEN order_rank = 1 THEN 'First'
+        WHEN order_rank BETWEEN 2 AND 11 THEN 'SecondToTen'
+        WHEN order_rank >= 11 THEN 'Eleven-through-max'
+        END AS orank
+ , COUNT(*) num_orders
+
+FROM order_hist
+GROUP BY 1, 2, 3, 4)a GROUP BY 1, 2, 3, 4 ORDER BY 1, 2, 3, 4
+
+;
+
