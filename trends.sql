@@ -1,5 +1,6 @@
 /**
-  Lets do some time series analysis on the rental payments data
+  * Queries here some time series analysis on the rental payments data.
+  * Percentage of totals.
   vtrbusic.payments
 
  */
