@@ -1,6 +1,8 @@
 /**
-
-  1. Does first order rating determine Life time value.
+  1. Top 5 actors by gross amount
+  2. Customers who rented movies of the top 5 actors
+  Reference - Packt Book, Advanced Applied SQL for Business Intelligence and Analytics
+  is a great reference for these queries.
 
  */
 
