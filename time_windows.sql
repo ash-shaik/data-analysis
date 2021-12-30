@@ -1,4 +1,5 @@
 /**
+  Smoothed moving average metrics provide easier ways to detect trends in the time range.
   1. Size of the window
   2. Aggregation function
   3. Grouping / Partitioning
