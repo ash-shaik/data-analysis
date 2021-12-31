@@ -36,4 +36,19 @@ SELECT extract('year' FROM p.payment_date) || '-'
 FROM vtrbusic.payment p
 ;
 
+-- Month Over Month sales
+
+WITH monthy_sales AS (SELECT extract('year' FROM p.payment_date) || '-'
+    || extract('month' FROM p.payment_date) AS year_month
+                           , SUM(amount)    as amount
+                      FROM vtrbusic.payment p
+                      GROUP BY extract('year' FROM p.payment_date) || '-'
+                                   || extract('month' FROM p.payment_date))
+
+SELECT year_month
+     , amount
+     , lag(year_month) OVER ( ORDER BY year_month) as prev_month
+     , lag(amount) OVER ( ORDER BY year_month)     as prev_amount
+FROM monthy_sales
+;
 
