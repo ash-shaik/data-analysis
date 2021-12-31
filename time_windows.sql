@@ -18,3 +18,22 @@ FROM vtrbusic.payment p
     q.payment_date BETWEEN p.payment_date - INTERVAL '1 month' AND p.payment_date
 GROUP BY 1, 2
 ;
+
+-- Using window function.
+SELECT extract('year' FROM p.payment_date) || '-'
+    || extract('month' FROM p.payment_date)                                                  AS year_month
+     , AVG(p.amount) OVER (ORDER BY payment_date ROWS BETWEEN 1 PRECEDING AND CURRENT ROW)   as moving_average_amount
+     , COUNT(p.amount) OVER (ORDER BY payment_date ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) as num_records
+FROM vtrbusic.payment p
+;
+
+-- YTD amount
+SELECT extract('year' FROM p.payment_date) || '-'
+    || extract('month' FROM p.payment_date)                                                                   AS year_month
+     , amount
+     , SUM(p.amount)
+       OVER (PARTITION BY extract('month' FROM p.payment_date) ORDER BY extract('month' FROM p.payment_date)) as ytd_amount
+FROM vtrbusic.payment p
+;
+
+
